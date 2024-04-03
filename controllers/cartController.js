@@ -12,11 +12,11 @@ const {
 let createCart = async (req, res) => {
   try {
     if (!req.body.productId) return resErrorOccurred(res, "Product is required");
-    if (!req.user) return resErrorOccurred(res, "User is required");
+    if (!req.body.userId) return resErrorOccurred(res, "User is required");
     if (!req.body.quantity) return resErrorOccurred(res, "Quantity is required");
     if (typeof req.body.quantity !== "number") req.body.quantity = 0;
     let requestBodyDetails = req.body;
-    requestBodyDetails.userId=req.user['_id'];
+    requestBodyDetails.userId=req.body.userId;
     let productDoc = await product.findById({ "_id": req.body.productId });
     let price = (Number(req.body.quantity) * Number(productDoc.price));
     requestBodyDetails.price = price;
