@@ -16,7 +16,7 @@ let createCart = async (req, res) => {
     if (!req.body.quantity) return resErrorOccurred(res, "Quantity is required");
     if (typeof req.body.quantity !== "number") req.body.quantity = 0;
     let requestBodyDetails = req.body;
-    requestBodyDetails.userId=req.body.userId;
+    requestBodyDetails.userId=req.body.userId
     let productDoc = await product.findById({ "_id": req.body.productId });
     let price = (Number(req.body.quantity) * Number(productDoc.price));
     requestBodyDetails.price = price;
@@ -39,8 +39,8 @@ let getCartbyId = async (req, res) => {
 
 let getAllCarts = async (req, res) => {
   try {
-    let id=req.user['_id'];
-    let docs = await cart.find({'userId':id}).populate([
+    let id=req.query,userId;
+    let docs = await cart.find({}).populate([
       { path: 'userId', select: 'username' ,_id: false},
       {
         path: 'productId',
