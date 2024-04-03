@@ -4,11 +4,11 @@ const CartController = require('../controllers/cartController');
 const {verifyToken} =require("../utils/verifyToken");
 
 
-router.post('/cart',verifyToken,CartController.createCart);
-router.get('/cart', verifyToken,CartController.getCartbyId);
-router.get('/carts', verifyToken,CartController.getAllCarts);
-router.put('/cart', verifyToken,CartController.updateCartById);
-router.delete('/cart',verifyToken,CartController.deleteCartById);
+router.post('/cart',CartController.createCart);
+router.get('/cart', CartController.getCartbyId);
+router.get('/carts', CartController.getAllCarts);
+router.put('/cart', CartController.updateCartById);
+router.delete('/cart',CartController.deleteCartById);
 
 
 module.exports = router;
