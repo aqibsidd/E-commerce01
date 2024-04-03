@@ -26,9 +26,9 @@ let resAlreadyExists = (res, data) => {
 
 let resDocDeleted = (res, data) => {
     return res
-        .status(204)
+        .status(200)
         .send({
-            statusCode: "204",
+            statusCode: "200",
             statusMessage: "Document deleted successfully!",
             data,
         });
@@ -92,7 +92,7 @@ let resServerError = (res, error) => {
             let errMsg = String(error.errors[0].message);
             return resErrorOccurred(res, errMsg.replace("_u1", ""));
         }
-    }   
+    }
     return res
         .status(500)
         .send({
