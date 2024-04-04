@@ -29,7 +29,8 @@ let createCart = async (req, res) => {
 };
 let getCartbyId = async (req, res) => {
   try {
-    let docs = await cart.findById({ "_id": req.query.id });
+    let userId = req.query.id
+    let docs = await cart.findById({ "_id": userId });
     return resFound(res, docs);
   } catch (error) {
     throw error;
