@@ -1,4 +1,5 @@
 const cart = require('../models/cart')
+const user = require('../models/user')
 const product = require('../models/product')
 const { 
   resFound,
@@ -30,7 +31,7 @@ let createCart = async (req, res) => {
 let getCartbyId = async (req, res) => {
   try {
     let userId = req.query.id
-    let docs = await cart.findById({ "_id": userId });
+    let docs = await user.findById({ "_id": userId });
     return resFound(res, docs);
   } catch (error) {
     throw error;
