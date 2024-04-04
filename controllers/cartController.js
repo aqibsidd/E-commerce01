@@ -75,19 +75,22 @@ let updateCartById = async (req, res) => {
 
 let deleteCartById = async (req, res) => {
   try {
-    const CartId = req.query.id;
-    let Cart = await cart.findById({ _id: CartId });
-    if (!Cart) {
-      return resNotFound(res, "Cart not found");
-    }
-    Cart = await Cart.deleteOne(req.body);
+    const productId = req.query.id;
 
-    return resDocDeleted(res, Cart);
+    let cartItem = await cart.findOne({ 'productId': productId });
+
+    if (!cartItem) {
+      return resNotFound(res, "Cart item not found");
+    }
+    await cartItem.deleteOne();
+
+    return resDocDeleted(res, "Cart item deleted successfully");
   } catch (error) {
     console.log(error);
     return resServerError(res, error);
   }
 };
+
 module.exports = {
   createCart,
   getCartbyId,
