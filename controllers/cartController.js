@@ -1,7 +1,7 @@
 const cart = require('../models/cart')
-const user = require('../models/user')
+// const user = require('../models/user')
 const product = require('../models/product')
-const { 
+const {
   resFound,
   resDocCreated,
   resDocUpdated,
@@ -9,7 +9,7 @@ const {
   resNotFound,
   resServerError,
   resErrorOccurred
-  } = require("../utils/response");
+} = require("../utils/response");
 let createCart = async (req, res) => {
   try {
     if (!req.body.productId) return resErrorOccurred(res, "Product is required");
@@ -17,7 +17,7 @@ let createCart = async (req, res) => {
     if (!req.body.quantity) return resErrorOccurred(res, "Quantity is required");
     if (typeof req.body.quantity !== "number") req.body.quantity = 0;
     let requestBodyDetails = req.body;
-    requestBodyDetails.userId=req.body.userId
+    requestBodyDetails.userId = req.body.userId
     let productDoc = await product.findById({ "_id": req.body.productId });
     let price = (Number(req.body.quantity) * Number(productDoc.price));
     requestBodyDetails.price = price;
@@ -31,7 +31,7 @@ let createCart = async (req, res) => {
 let getCartbyId = async (req, res) => {
   try {
     let userId = req.query.id
-    let docs = await user.findById({ "_id": userId });
+    let docs = await cart.find({ "userId": userId });
     return resFound(res, docs);
   } catch (error) {
     throw error;
@@ -41,9 +41,9 @@ let getCartbyId = async (req, res) => {
 
 let getAllCarts = async (req, res) => {
   try {
-    let id=req.query,userId;
+    let id = req.query, userId;
     let docs = await cart.find({}).populate([
-      { path: 'userId', select: 'username' ,_id: false},
+      { path: 'userId', select: 'username', _id: false },
       {
         path: 'productId',
         select: 'name price ',
@@ -94,4 +94,4 @@ module.exports = {
   getAllCarts,
   updateCartById,
   deleteCartById,
-  };
+};
