@@ -1,6 +1,6 @@
-const cart = require('../models/cart')
+const cart = require("../models/cart");
 // const user = require('../models/user')
-const product = require('../models/product')
+const product = require("../models/product");
 const {
   resFound,
   resDocCreated,
@@ -8,18 +8,20 @@ const {
   resDocDeleted,
   resNotFound,
   resServerError,
-  resErrorOccurred
+  resErrorOccurred,
 } = require("../utils/response");
 let createCart = async (req, res) => {
   try {
-    if (!req.body.productId) return resErrorOccurred(res, "Product is required");
+    if (!req.body.productId)
+      return resErrorOccurred(res, "Product is required");
     if (!req.body.userId) return resErrorOccurred(res, "User is required");
-    if (!req.body.quantity) return resErrorOccurred(res, "Quantity is required");
+    if (!req.body.quantity)
+      return resErrorOccurred(res, "Quantity is required");
     if (typeof req.body.quantity !== "number") req.body.quantity = 0;
     let requestBodyDetails = req.body;
-    requestBodyDetails.userId = req.body.userId
-    let productDoc = await product.findById({ "_id": req.body.productId });
-    let price = (Number(req.body.quantity) * Number(productDoc.price));
+    requestBodyDetails.userId = req.body.userId;
+    let productDoc = await product.findById({ _id: req.body.productId });
+    let price = Number(req.body.quantity) * Number(productDoc.price);
     requestBodyDetails.price = price;
     let doc = await cart.create(requestBodyDetails);
     return resDocCreated(res, doc);
@@ -30,25 +32,25 @@ let createCart = async (req, res) => {
 };
 let getCartbyId = async (req, res) => {
   try {
-    let userId = req.query.id
-    let docs = await cart.find({ "userId": userId });
+    let userId = req.query.id;
+    let docs = await cart.find({ userId: userId });
     return resFound(res, docs);
   } catch (error) {
     throw error;
   }
 };
 
-
 let getAllCarts = async (req, res) => {
   try {
-    let id = req.query, userId;
+    let id = req.query,
+      userId;
     let docs = await cart.find({}).populate([
-      { path: 'userId', select: 'username', _id: false },
+      { path: "userId", select: "username", _id: false },
       {
-        path: 'productId',
-        select: 'name price ',
-        _id: false
-      }
+        path: "productId",
+        select: "name price ",
+        _id: false,
+      },
     ]);
 
     return resFound(res, docs);
@@ -75,19 +77,22 @@ let updateCartById = async (req, res) => {
 
 let deleteCartById = async (req, res) => {
   try {
-    const CartId = req.query.id;
-    let Cart = await cart.findById({ _id: CartId });
-    if (!Cart) {
-      return resNotFound(res, "Cart not found");
-    }
-    Cart = await Cart.deleteOne(req.body);
+    const productId = req.query.id;
 
-    return resDocDeleted(res, Cart);
+    let cartItem = await cart.findOne({ productId: productId });
+
+    if (!cartItem) {
+      return resNotFound(res, "Cart item not found");
+    }
+    await cartItem.deleteOne();
+
+    return resDocDeleted(res, "Cart item deleted successfully");
   } catch (error) {
     console.log(error);
     return resServerError(res, error);
   }
 };
+
 module.exports = {
   createCart,
   getCartbyId,
