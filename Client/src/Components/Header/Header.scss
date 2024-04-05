@@ -1,0 +1,40 @@
+.Header{
+    background-color: rgb(13,13,13);
+    width: 100%;
+    display: flex;
+    height: 4rem;
+    justify-content: space-between;    
+    color: antiquewhite;
+
+    .left,.left1{
+        width: 10%;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+    }
+
+   #logout{
+    cursor: pointer;
+   }
+
+    .right{
+        width: 20%;
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+
+        .NavLinks{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+
+            .linkTwo{
+                font-weight: bolder;
+            }
+        }
+    }
+}
+.textw{
+    color: white;
+}

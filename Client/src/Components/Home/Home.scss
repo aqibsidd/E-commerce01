@@ -1,0 +1,32 @@
+.HomePage{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+.ContentHero{
+    z-index: 50;
+
+    .HomeRow{
+        width: 100%;
+        padding-inline: 2rem;
+        display: flex;
+        .col50{
+            width: 48%;
+            margin: 1rem;
+            background-color: aqua;
+        }
+        .col33{
+            width: 33%;
+            margin: 1rem;
+            background-color: aqua;
+        }
+    }
+}
+}
+.rowCard{
+    width: 100%;
+    justify-content: space-evenly;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    column-gap:  1rem;
+}
